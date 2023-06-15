@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public GameObject mainLight;
+    public GameObject redLight;
+
     Rigidbody rb;
     Animator animator;
+
     [SerializeField] float movementSpeed = 6f;
     [SerializeField] float jumpForce = 5f;
 
@@ -72,5 +76,23 @@ public class PlayerMovement : MonoBehaviour
     bool IsGrounded()
     {
         return Physics.CheckSphere(groundCheck.position, .1f, ground);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Trigger"))
+        {
+            
+            redLight.SetActive(true);
+            mainLight.SetActive(false);
+        }
+
+        if (other.gameObject.CompareTag("Undo Trigger"))
+        {
+            
+            redLight.SetActive(false);
+            mainLight.SetActive(true);
+        }
+        
     }
 }
